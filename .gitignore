@@ -1,2 +1,6 @@
-CONFIG.md
-/upload/
+
+apache-maven-3.9.5/
+docs/
+dbeaver/
+gradle-8.5/
+apache-tomcat-10.1.16/
