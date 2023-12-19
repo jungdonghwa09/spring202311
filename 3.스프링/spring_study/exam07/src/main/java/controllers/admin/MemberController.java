@@ -18,13 +18,18 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberController {
     //목록나오게
-    private final MemberDao memberDao;
+    private final MemberDao memberDao;//=new MemberDao();
+
+    //public MemberController(MemberDao memberDao){
+      //  this.memberDao = memberDao;
+    //}
+
     @GetMapping // /admin/member로 나옴
     public String index(@ModelAttribute MemberSearch search, Errors errors, Model model){
         //MemberSearch가 커맨드객체-데이터가 들어오는 거
         //비어있는 객체라도만듬
-       // List<Member> members = memberDao.getList(search);
-       // model.addAttribute("members",members);
+        List<Member> members = memberDao.getList(search);
+        model.addAttribute("members",members);
 
         return "admin/member/list";
     }
