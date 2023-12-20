@@ -9,7 +9,9 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.validation.Validator;
 import org.springframework.web.servlet.config.annotation.*;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
@@ -19,7 +21,7 @@ import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 
 @Configuration
 @EnableWebMvc//-3개, handlermapping, adaptor, viewresolver
-@Import(DbConfig.class)
+@Import(DbConfig2.class)
 public class MvcConfig implements WebMvcConfigurer {
     @Autowired//스프링컨테이너도 컨테이너 안에 관리객체임
     //webapplictioncontext의 상위버전, 다형성
@@ -59,6 +61,8 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/**")
                 .addResourceLocations("classpath:/static/");
+        registry.addResourceHandler("/upload/**")
+                .addResourceLocations("file:///c:/uploads/");
     }
 
     @Override
@@ -125,4 +129,13 @@ public class MvcConfig implements WebMvcConfigurer {
       //  registry.jsp("/WEB-INF/templates/", ".jsp");
             //.jsp인 hello.jsp를 찾을 수 있게 해주는 메서드
     //}
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer configurer(){
+        PropertySourcesPlaceholderConfigurer conf =
+                new PropertySourcesPlaceholderConfigurer();
+        conf.setLocations(
+                new ClassPathResource("application.properties")
+        );
+        return conf;
+    }
 }
