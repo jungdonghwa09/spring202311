@@ -12,6 +12,8 @@ public class Ex08 {
         List<Book> books = IntStream.rangeClosed(1,10)
                 .mapToObj(i->new Book("책"+i,"저자"+i,
                         "출판사"+i)).toList();
+        System.out.println(books);
+
         Map<String,String> data = books.stream().collect(
                 toMap(Book::getAuthor,Book::getTitle)
         );
